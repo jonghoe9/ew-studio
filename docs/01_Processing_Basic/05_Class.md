@@ -2,41 +2,43 @@
 
 원 그리기를 Class를 사용해 표현하기
 
+- abs() : absolute value, () 안에 있는 값의 절대값
+
 ```java title="proc-0105.pde" linenums="1"
 myCircle c1, c2;
 
 void setup() {
   size(800, 500);
-  c1 = new myCircle(300, 200, 200, 200);
-  c2 = new myCircle(500, 150, 240, 120);
+  c1 = new myCircle(300, 200, 200);
+  c2 = new myCircle(500, 150, 140);
 }
 
 void draw() {
   background(255);
-  float myRed, myBlue;
-  myRed = map(mouseX, 0, width, 0, 255);
-  myBlue = map(mouseY, 0, height, 255, 0);
-  c1.update(myRed, 0, myBlue);
-  c2.update(myBlue, myRed, 0);
+  float color1, color2, color3;
+  color1 = map(mouseX, 0, width, 0, 255);
+  color2 = map(mouseY, 0, height, 255, 0);
+  color3 = abs(color1 - color2);
+  c1.update(color1, color3, color2);
+  c2.update(color2, color1, color3);
   c2.update(mouseX, mouseY);
   c1.draw();
   c2.draw();
 }
 
 class myCircle {
-  int x, y, w, h;
+  int x, y, d;
   float r, g, b;
   
-  myCircle(int x, int y, int w, int h) {
+  myCircle(int x, int y, int d) {
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.d = d;
   }
   
   void draw() {
     fill(r, g, b);
-    ellipse(x, y, w, h);
+    circle(x, y, d);
   }
   
   void update(float red, float green, float blue) {
